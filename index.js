@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion,ObjectId } = require('mongodb');
 const port = process.env.PORT || 5000;
 const cors = require("cors");
 require("dotenv").config();
@@ -35,7 +35,26 @@ async function run(){
         app.get('/dinner', async(req,res)=>{
             const result = await dinnerFastCollection.find().toArray();
             res.send(result);
-        })
+        });
+
+        app.get('/checkoutitems/:id',async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)};
+            const result = await breakFastCollection.findOne(query);
+            res.send(result);
+        });
+        app.get('/checkoutitems/:id',async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)};
+            const result = await lunchFastCollection.findOne(query);
+            res.send(result);
+        });
+        app.get('/checkoutitems/:id',async(req,res)=>{
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)};
+            const result = await dinnerFastCollection.findOne(query);
+            res.send(result);
+        });
 
     }finally{}
 }
